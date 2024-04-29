@@ -1,5 +1,21 @@
-<script setup></script>
+<script>
+export default {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  methods: {
+    increment() {
+      this.count++
+    }
+  }
+}
+</script>
 
-<template></template>
+<template>
+  <h1>{{ count }}</h1>
+  <button @click="increment">+</button>
+</template>
 
 <style scoped></style>
