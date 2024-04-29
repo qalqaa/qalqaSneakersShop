@@ -1,18 +1,3 @@
-<!-- <script>
-export default {
-  data() {
-    return {
-      count: 0
-    }
-  },
-  methods: {
-    increment() {
-      this.count++
-    }
-  }
-}
-</script> -->
-
 <script setup>
 import { ref } from 'vue'
 
@@ -22,13 +7,16 @@ function increment() {
   count.value++
   console.log(count)
 }
+
+// function updateCount(event) {
+//   count.value = Number(event.target.value)
+// }
 </script>
 
 <template>
-  <!-- <h1>{{ count }}</h1>
-  <button @click="increment">+</button> -->
   <h1>{{ count }}</h1>
   <button @click="increment">+</button>
+  <input v-model="count" />
 </template>
 
 <style scoped></style>
