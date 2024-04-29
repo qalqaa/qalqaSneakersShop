@@ -16,7 +16,7 @@ function increment() {
 <template>
   <h1>{{ count }}</h1>
   <button @click="increment">+</button>
-  <input v-model="count" />
+  <input @keyup.ctrl.enter="increment" />
 </template>
 
 <style scoped></style>
