@@ -1,8 +1,11 @@
 <script setup>
-defineProps({
+const props = defineProps({
   title: String,
-  price: Number
+  price: Number,
+  isAdded: Boolean
 })
+console.log(props)
+
 </script>
 
 <template>
@@ -10,6 +13,7 @@ defineProps({
     <h2>Product: {{ title }}</h2>
     <p>Price: {{ price }}</p>
     <p>Added: {{ isAdded }}</p>
+    <slot></slot>
   </div>
 </template>
 
