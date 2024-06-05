@@ -8,11 +8,16 @@ import Drawer from './components/Drawer.vue'
 
 const items = ref([])
 const cart = ref([])
+const isLoading = ref(false)
 
 const cartOpen = ref(false)
 
 const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + item.price, 0))
 const vatPrice = computed(() => totalPrice.value * 0.2)
+
+const cartButtonDisabled = computed(() =>
+  isLoading.value ? true : totalPrice.value ? false : true
+)
 
 const closeCart = () => {
   cartOpen.value = false
@@ -38,8 +43,9 @@ function removeFromCart(item) {
 
 const createOrder = async () => {
   try {
+    isLoading.value = true
     const { data } = await axios.post(`https://4c860bad2146c5b3.mokky.dev/orders`, {
-      items: cart,
+      items: cart.value,
       totalPrice: totalPrice.value
     })
     cart.value = []
@@ -47,6 +53,8 @@ const createOrder = async () => {
     return data
   } catch (error) {
     console.error(error)
+  } finally {
+    isLoading.value = false
   }
 }
 
@@ -141,17 +149,47 @@ const fetchItems = async () => {
 }
 
 onMounted(async () => {
+  const localCart = [localStorage.getItem('cart')]
+  cart.value = localCart ? JSON.parse(localCart) : []
+
+  
   await fetchItems()
   await fetchFavorites()
+  
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: cart.value.some((cartItem)=> cartItem.id === item.id)
+  }))
 })
 
 watch(filters, fetchItems)
+
+watch(cart, () => {
+  items.value = items.value.map((item) => ({
+    ...item,
+    isAdded: false
+  }))
+})
+
+watch(
+  cart,
+  () => {
+    localStorage.setItem('cart', JSON.stringify(cart.value))
+  },
+  { deep: true }
+)
 
 provide('cart', { cart, closeCart, openCart, addToCart, removeFromCart })
 </script>
 
 <template>
-  <Drawer v-if="cartOpen" :total-price="totalPrice" :vat-price="vatPrice" @create-order="createOrder" />
+  <Drawer
+    v-if="cartOpen"
+    :total-price="totalPrice"
+    :vat-price="vatPrice"
+    @create-order="createOrder"
+    :button-disabled="cartButtonDisabled"
+  />
   <div class="bg-color-mute w-4/5 m-auto rounded-xl shadow-xl mt-10">
     <Header :total-price="totalPrice" @open-cart="openCart" />
     <div class="p-10">
