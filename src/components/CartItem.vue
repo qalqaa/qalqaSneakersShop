@@ -11,7 +11,7 @@ defineProps({
 
 
 <template>
-  <div class="flex items-center border border-zinc-500 rounded-xl p-4 gap-4">
+  <div class="flex items-center bg-color-soft inner-shadow rounded-xl p-4 gap-4">
     <img class="w-20 h-15" :src="imageUrl" :alt="title" />
 
     <div class="flex flex-col flex-1">

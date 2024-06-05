@@ -152,13 +152,12 @@ onMounted(async () => {
   const localCart = [localStorage.getItem('cart')]
   cart.value = localCart ? JSON.parse(localCart) : []
 
-  
   await fetchItems()
   await fetchFavorites()
-  
+
   items.value = items.value.map((item) => ({
     ...item,
-    isAdded: cart.value.some((cartItem)=> cartItem.id === item.id)
+    isAdded: cart.value.some((cartItem) => cartItem.id === item.id)
   }))
 })
 
@@ -195,17 +194,20 @@ provide('cart', { cart, closeCart, openCart, addToCart, removeFromCart })
     <div class="p-10">
       <div class="flex justify-between items-center">
         <h2 class="text-3xl font-bold mb-8">Все кроссовки</h2>
-        <div class="flex gap-4">
-          <select @change="onChangeSelect" class="py-2 px-4 border border-zinc-500 rounded-md">
+        <div class="w-1/3 flex gap-2">
+          <select
+            @change="onChangeSelect"
+            class="w-1/2 py-2 px-4 outline-none bg-color-soft inner-shadow rounded-md"
+          >
             <option value="title">По названию</option>
             <option value="price">По цене (возрастанию)</option>
             <option value="-price">По цене (убыванию)</option>
           </select>
-          <div class="relative">
+          <div class="w-1/2 relative">
             <img class="absolute top-3 left-4" src="/search.svg" alt="search" />
             <input
               @input="onChangeSearchInput"
-              class="p-2 border border-zinc-500 pl-11 pr-4 transition outline-none focus:border-gray-300 rounded-md"
+              class="p-2 bg-color-soft inner-shadow pl-11 pr-4 transition outline-none rounded-md"
               type="text"
               placeholder="Поиск..."
             />
