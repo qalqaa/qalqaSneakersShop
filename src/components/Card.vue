@@ -14,7 +14,7 @@ defineProps({
 <template>
   <div class="">
     <div
-      class="relative card-hitbox bg-color-soft p-10 rounded-xl p-8 transition hover:translate-y-1 inner-shadow"
+      class="relative card-hitbox bg-color-soft p-10 rounded-xl p-8 transition hover:-translate-y-1 inner-shadow"
     >
       <img
         @click="onClickFavorite"
