@@ -8,6 +8,7 @@ import List from '../components/List.vue'
 const { cart, addToCart, removeFromCart } = inject('cart')
 
 const items = ref([])
+const isEmpty = ref(false)
 
 const filters = reactive({
   sortBy: 'title',
@@ -94,6 +95,12 @@ const fetchItems = async () => {
       params
     })
 
+    if (data.length === 0) {
+      isEmpty.value = true
+    } else {
+      isEmpty.value = false
+    }
+
     items.value = data.map((obj) => ({
       ...obj,
       isFavorite: false,
@@ -151,5 +158,11 @@ watch(filters, fetchItems)
       </div>
     </div>
   </div>
-  <List :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus" />
+  <div v-if="!isEmpty">
+    <List :items="items" @add-to-favorite="addToFavorite" @add-to-cart="onClickAddPlus" />
+  </div>
+  <div class="flex flex-col justify-center items-center" v-else>
+    <img height="50" width="50" src="/emoji-1.png" alt="Sad emoji" />
+    <p class="text-xl mt-3">По вашему запросу ничего не найдено</p>
+  </div>
 </template>

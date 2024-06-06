@@ -11,7 +11,7 @@ const props = defineProps({
   vatPrice: Number
 })
 
-const { cart } = inject('cart')
+const { cart, closeCart } = inject('cart')
 
 const isLoading = ref(false)
 const orderId = ref(null)
@@ -38,7 +38,7 @@ const buttonDisabled = computed(() => isLoading.value || cartIsEmpty.value)
 </script>
 
 <template>
-  <div class="fixed top-0 left-0 w-full h-full bg-black/70 z-20"></div>
+  <div @click="closeCart" class="fixed top-0 left-0 w-full h-full bg-black/70 z-20"></div>
   <div class="bg-color-mute w-96 h-full fixed right-0 top-0 z-30 p-10">
     <DrawerHead />
 
