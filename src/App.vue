@@ -1,22 +1,19 @@
 <script setup>
 import { provide, ref, watch, computed } from 'vue'
-import axios from 'axios'
 
 import Header from './components/Header.vue'
 import Drawer from './components/Drawer.vue'
 
 /*Корзина*/
 const cart = ref([])
-const isLoading = ref(false)
+
 
 const cartOpen = ref(false)
 
 const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + item.price, 0))
 const vatPrice = computed(() => totalPrice.value * 0.2)
 
-const cartButtonDisabled = computed(() =>
-  isLoading.value ? true : totalPrice.value ? false : true
-)
+
 
 const closeCart = () => {
   cartOpen.value = false
@@ -35,22 +32,7 @@ function removeFromCart(item) {
   item.isAdded = false
 }
 
-const createOrder = async () => {
-  try {
-    isLoading.value = true
-    const { data } = await axios.post(`https://4c860bad2146c5b3.mokky.dev/orders`, {
-      items: cart.value,
-      totalPrice: totalPrice.value
-    })
-    cart.value = []
 
-    return data
-  } catch (error) {
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
-}
 
 watch(
   cart,
@@ -70,8 +52,6 @@ provide('cart', { cart, closeCart, openCart, addToCart, removeFromCart })
     v-if="cartOpen"
     :total-price="totalPrice"
     :vat-price="vatPrice"
-    @create-order="createOrder"
-    :button-disabled="cartButtonDisabled"
   />
   <div class="bg-color-mute w-4/5 m-auto rounded-xl shadow-xl mt-10">
     <Header :total-price="totalPrice" @open-cart="openCart" />

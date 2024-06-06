@@ -32,6 +32,7 @@ defineProps({
         </div>
 
         <img
+          v-if="onClickAdd"
           class="cursor-pointer"
           @click="onClickAdd"
           :src="isAdded ? '/checked.svg' : '/plus.svg'"
