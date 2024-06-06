@@ -17,6 +17,7 @@ defineProps({
       class="relative card-hitbox bg-color-soft p-10 rounded-xl p-8 transition hover:-translate-y-1 inner-shadow"
     >
       <img
+        v-if="onClickFavorite"
         @click="onClickFavorite"
         :src="isFavorite ? '/like-2.svg' : '/like-1.svg'"
         alt="likeButton"
