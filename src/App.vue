@@ -7,13 +7,10 @@ import Drawer from './components/Drawer.vue'
 /*Корзина*/
 const cart = ref([])
 
-
 const cartOpen = ref(false)
 
 const totalPrice = computed(() => cart.value.reduce((acc, item) => acc + item.price, 0))
 const vatPrice = computed(() => totalPrice.value * 0.2)
-
-
 
 const closeCart = () => {
   cartOpen.value = false
@@ -32,8 +29,6 @@ function removeFromCart(item) {
   item.isAdded = false
 }
 
-
-
 watch(
   cart,
   () => {
@@ -48,14 +43,12 @@ provide('cart', { cart, closeCart, openCart, addToCart, removeFromCart })
 </script>
 
 <template>
-  <Drawer
-    v-if="cartOpen"
-    :total-price="totalPrice"
-    :vat-price="vatPrice"
-  />
-  <div class="bg-color-mute w-4/5 m-auto rounded-xl shadow-xl mt-10">
+  <Drawer v-if="cartOpen" :total-price="totalPrice" :vat-price="vatPrice" />
+  <div
+    class="bg-color-mute m-auto rounded-none shadow-xl md:rounded-xl md:w-4/5 w-full md:mt-10 mt-0"
+  >
     <Header :total-price="totalPrice" @open-cart="openCart" />
-    <div class="p-10">
+    <div class="p-5 sm:p-10">
       <RouterView />
     </div>
   </div>
