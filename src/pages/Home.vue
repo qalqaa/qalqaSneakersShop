@@ -42,7 +42,7 @@ const addToFavorite = async (item) => {
 
       item.isFavorite = true
 
-      const { data } = await axios.post(`https://4c860bad2146c5b3.mokky.dev/favorites`, obj)
+      const { data } = await axios.post(`https://4c860bad2146c5b3.mokky.dev/favorites`, obj) //piska
 
       item.favoriteId = data.id
 
@@ -135,7 +135,6 @@ watch(cart, () => {
 
 watch(filters, fetchItems)
 </script>
-
 
 <template>
   <div class="flex justify-between items-center">
