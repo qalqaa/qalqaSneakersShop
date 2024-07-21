@@ -57,6 +57,7 @@ provide('cart', { cart, closeCart, openCart, addToCart, removeFromCart })
     <Header :total-price="totalPrice" @open-cart="openCart" />
     <div class="p-10">
       <RouterView />
+      <div>Я гей</div>
     </div>
   </div>
 </template>
